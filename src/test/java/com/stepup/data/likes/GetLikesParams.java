@@ -1,13 +1,13 @@
 package com.stepup.data.likes;
 
 public class GetLikesParams {
-    private final String objectType;
+    private int ownerId;
 
-    GetLikesParams(String objectType) {
-        this.objectType = objectType;
+    public GetLikesParams(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getObjectType() {
-        return objectType;
+    public int getOwnerId() {
+        return ownerId;
     }
 }

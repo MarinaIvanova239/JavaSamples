@@ -62,9 +62,8 @@ public abstract class RestService {
 
     protected RequestSpecification request(String accessToken) {
         return RestAssured.given()
-                .baseUri("https://api.vk.com/method/")
+                .baseUri("https://testSystem.test")
                 .accept(ContentType.JSON)
-                .param("access_token", accessToken)
-                .param("v", "5.131");
+                .param("access_token", accessToken);
     }
 }

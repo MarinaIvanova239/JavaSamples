@@ -23,7 +23,7 @@ public class LikeService extends RestService {
 
     private Response addLikeResponse(AddLikeParams addLikeParams, String accessToken) {
         RequestSpecification addLikeRq = request(accessToken)
-                .param("type", addLikeParams.getObjectType());
+                .param("owner_id", addLikeParams.getOwnerId());
         return addLikeRq.post("likes.add");
     }
 
@@ -40,7 +40,7 @@ public class LikeService extends RestService {
 
     private Response getLikesResponse(GetLikesParams getLikesParams, String accessToken) {
         RequestSpecification getLikesRq =  request(accessToken)
-                .param("type", getLikesParams.getObjectType());
+                .param("owner_id", getLikesParams.getOwnerId());
 
         return getLikesRq.get("likes.getList");
     }
