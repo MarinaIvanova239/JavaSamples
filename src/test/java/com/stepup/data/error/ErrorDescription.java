@@ -1,4 +1,4 @@
-package com.stepup.common;
+package com.stepup.data.error;
 
 public class ErrorDescription {
     private int code;

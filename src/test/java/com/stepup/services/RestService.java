@@ -3,7 +3,7 @@ package com.stepup.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stepup.common.ErrorDescription;
+import com.stepup.data.error.ErrorDescription;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -16,7 +16,7 @@ import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RestService {
+public abstract class RestService {
 
     private ObjectMapper mapper() {
         return new ObjectMapper();
@@ -34,14 +34,14 @@ public class RestService {
     }
 
     protected <T> T mapWithStatusCheck(Response value, Class<T> valueType, String objectDescription,
-                                       ObjectMapper mapper, String responsePath) throws Exception {
+                                       String responsePath) throws Exception {
         assertThat("Request should be successfully executed, but actual " + value.getStatusCode(),
                 value.getStatusCode() == 200);
         T resultBody = valueType.newInstance();
         try {
-            JsonNode responseJsonNode = mapper.readTree(value.getBody().asString()).path(responsePath);
+            JsonNode responseJsonNode = mapper().readTree(value.getBody().asString()).path(responsePath);
             assertThat("Expected " + responsePath + " field to be present, but it was not", !responseJsonNode.isMissingNode());
-            resultBody = mapper.treeToValue(responseJsonNode, valueType);
+            resultBody = mapper().treeToValue(responseJsonNode, valueType);
         } catch (Exception e) {
             Assert.fail("Exception occurred while processing json: " + e.getMessage());
         }
@@ -50,7 +50,7 @@ public class RestService {
     }
 
     protected ErrorDescription mapWithExpectingError(Response value, String objectDescription) throws Exception {
-        return mapWithStatusCheck(value, ErrorDescription.class, objectDescription, mapper(), "error");
+        return mapWithStatusCheck(value, ErrorDescription.class, objectDescription, "error");
     }
 
     protected Boolean requestReturnTooManyRequestsError(Response value) throws JsonProcessingException {

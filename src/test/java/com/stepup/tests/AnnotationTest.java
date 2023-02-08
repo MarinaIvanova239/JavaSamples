@@ -1,7 +1,7 @@
 package com.stepup.tests;
 
 import com.stepup.annotations.CourseParticipantAnnotation;
-import com.stepup.common.Student;
+import com.stepup.data.Student;
 import org.junit.Test;
 
 public class AnnotationTest {

@@ -1,4 +1,4 @@
-package com.stepup.common;
+package com.stepup.data;
 
 import com.stepup.annotations.CourseParticipantAnnotation;
 
